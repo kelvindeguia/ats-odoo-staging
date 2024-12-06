@@ -1,0 +1,62 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_job_interviewer,hr.job.interviewer,hr.model_hr_job,group_hr_recruitment_interviewer,1,0,0,0
+access_hr_applicant_interviewer,hr.applicant.interviewer,model_hr_applicant,group_hr_recruitment_interviewer,1,1,0,0
+access_hr_applicant_user,hr.applicant.user,model_hr_applicant,group_hr_recruitment_user,1,1,1,0
+access_hr_recruitment_stage_interviewer,hr.recruitment.stage.interviewer,model_hr_recruitment_stage,group_hr_recruitment_interviewer,1,0,0,0
+access_hr_recruitment_stage_user,hr.recruitment.stage.user,model_hr_recruitment_stage,group_hr_recruitment_user,1,0,0,0
+access_hr_recruitment_stage_manager,hr.recruitment.stage.manager,model_hr_recruitment_stage,group_hr_recruitment_manager,1,0,0,0
+access_hr_recruitment_degree,hr.recruitment.degree,model_hr_recruitment_degree,group_hr_recruitment_user,1,1,1,1
+access_hr_recruitment_refuse_reason_interviewer,hr.applicant.refuse.reason.interviewer,model_hr_applicant_refuse_reason,group_hr_recruitment_interviewer,1,0,0,0
+access_hr_recruitment_refuse_reason,hr.applicant.refuse.reason,model_hr_applicant_refuse_reason,group_hr_recruitment_user,1,1,1,1
+access_res_partner_hr_user,res.partner.user,base.model_res_partner,group_hr_recruitment_user,1,1,1,1
+access_calendar_event_hruser,calendar.event.hruser,calendar.model_calendar_event,group_hr_recruitment_user,1,1,1,1
+access_hr_recruitment_source_hr_officer,hr.recruitment.source,model_hr_recruitment_source,group_hr_recruitment_user,1,1,1,1
+access_hr_recruitment_source_all,hr.recruitment.source,model_hr_recruitment_source,,1,0,0,0
+access_hr_applicant_category,hr.applicant_category,model_hr_applicant_category,,1,1,1,0
+access_hr_applicant_category_manager,hr.applicant_category,model_hr_applicant_category,group_hr_recruitment_user,1,1,1,1
+access_calendar_event_type_hr_officer,calendar.event.type.officer,calendar.model_calendar_event_type,group_hr_recruitment_user,1,1,1,0
+access_applicant_get_refuse_reason,access.applicant.get.refuse.reason,model_applicant_get_refuse_reason,hr_recruitment.group_hr_recruitment_user,1,1,1,1
+access_applicant_get_refuse_reason_interviewer,access.applicant.get.refuse.reason.interviewer,model_applicant_get_refuse_reason,hr_recruitment.group_hr_recruitment_interviewer,1,1,1,0
+access_applicant_send_mail,access.applicant.send.mail,model_applicant_send_mail,hr_recruitment.group_hr_recruitment_user,1,1,1,0
+access_applicant_send_mail_interviewer,access.applicant.send.mail.interviewer,model_applicant_send_mail,hr_recruitment.group_hr_recruitment_interviewer,1,1,1,0
+access_hr_requisition,hr.requisition,model_hr_requisition,group_hr_recruitment_user,1,1,0,0
+access_hr_requisition_status,hr.requisition,model_hr_requisition,group_hr_recruitment_requisition_status,1,1,0,0
+access_hr_referral_admin,Referral Admin Access,model_hr_referral,base.group_system,1,1,1,1
+access_hr_referral_recruiter,Referral Recruiter Access,model_hr_referral,group_hr_recruitment_user,1,1,1,0
+access_hr_form_admin,Form Admin Access,model_hr_form,base.group_system,1,1,1,1
+access_hr_form_recruiter,Form Recruiter Access,model_hr_form,group_hr_recruitment_user,1,1,1,0
+
+access_hr_sourcing_admin,Sourcing Admin Access,model_hr_sourcing,base.group_system,1,1,1,1
+access_hr_sourcing_recruiter,Sourcing Recruiter Access,model_hr_sourcing,group_hr_recruitment_user,1,0,0,0
+
+access_hr_applicant_delete_access,Applicant Admin Access,model_hr_applicant,group_hr_recruitment_delete_access,0,0,0,1
+
+access_hr_applicant_view_access,Requisition View Access,model_hr_requisition,group_hr_recruitment_view_only_access,1,0,0,0
+access_hr_applicant_view_access,Applicant View Access,model_hr_applicant,group_hr_recruitment_view_only_access,1,0,0,0
+
+access_hr_job_portal_admin,Job Portal Admin Access,model_hr_portal,base.group_system,1,1,1,1
+access_hr_job_portal_recruiter,Job Portal Recruiter Access,model_hr_portal,group_hr_recruitment_user,1,1,1,0
+
+access_hr_pooling_admin,For Pooling Admin Access,model_hr_pooling,base.group_system,1,1,1,1
+access_hr_pooling_recruiter,For Pooling Recruiter Access,model_hr_pooling,group_hr_recruitment_user,1,1,1,0
+
+
+access_hr_pooling_stages,Pooling Stages Access,model_hr_pooling_stages,group_hr_recruitment_user,1,1,1,0
+
+access_hr_recruitment_admin_stage_logs,Stage Logs Admin Access,model_hr_stagelogs,base.group_system,1,1,1,1
+access_hr_recruitment_recruiter_stage_logs,Stage Logs Recruiter Access,model_hr_stagelogs,group_hr_recruitment_user,1,1,1,0
+
+access_hr_recruitment_admin_recruiter,Recruiter Admin Access,model_hr_recruiter,base.group_system,1,1,1,1
+access_hr_recruitment_recruiter_recruiter,Recruiter Recruiter Access,model_hr_recruiter,group_hr_recruitment_user,1,1,1,0
+
+access_hr_recruitment_admin_blacklist,Blacklist Admin Access,model_hr_blacklist,base.group_system,1,1,1,1
+access_hr_recruitment_recruiter_blacklist,Blacklist Recruiter Access,model_hr_blacklist,group_hr_recruitment_user,1,1,1,0
+
+access_hr_recruitment_admin_candidate,Candidate Form Admin Access,model_hr_candidate,base.group_system,1,1,1,1
+access_hr_recruitment_recruiter_candidate,Candidate Form Recruiter Access,model_hr_candidate,group_hr_recruitment_user,1,1,1,0
+
+access_hr_recruitment_admin_specification,Appointments Specification Form Admin Access,model_hr_specification,base.group_system,1,1,1,1
+access_hr_recruitment_recruiter_specification,Appointments Specification Form Recruiter Access,model_hr_specification,group_hr_recruitment_user,1,1,0,0
+
+access_hr_recruitment_admin_recruitmentmanager,Recruitment Manager Admin Access,model_hr_recruitmentmanager,base.group_system,1,1,1,1
+access_hr_recruitment_recruiter_recruitmentmanager,Recruitment Manager Recruiter Access,model_hr_recruitmentmanager,group_hr_recruitment_user,1,1,1,0

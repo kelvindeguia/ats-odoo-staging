@@ -1,0 +1,752 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Lead Menu - 2022-->
+    <record model="ir.actions.act_window" id="crm_lead_2022">
+        <field name="name">Year 2022 Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('create_date', '&lt;=', '2022-12-31 11:59:59'),('type', '=', 'lead')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <!--    Lead menu - 2023-->
+    <record model="ir.actions.act_window" id="crm_lead_2023">
+        <field name="name">Year 2023 Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('create_date', '&gt;=', '2022-12-31 11:59:59'),('type', '=', 'lead')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+    <!--    Lead menu - Anju -->
+    <record model="ir.actions.act_window" id="crm_lead_anju">
+        <field name="name">Anju's Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', 'Anju Shlisky'),('type', '=', 'lead'), ('x_has_more_than_three_numbers', '=', True)
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <!--    Lead menu - Christian -->
+    <record model="ir.actions.act_window" id="crm_lead_christian">
+        <field name="name">Christian's Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', 'Christian Venida'),('type', '=', 'lead'), ('x_has_more_than_three_numbers', '=', True)
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <!--    Lead menu - Cian -->
+    <record model="ir.actions.act_window" id="crm_lead_cian">
+        <field name="name">Cian's Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', 'Cian Kobe Mollah'),('type', '=', 'lead'), ('x_has_more_than_three_numbers', '=', True)
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <!--    Lead menu - John -->
+    <record model="ir.actions.act_window" id="crm_lead_john">
+        <field name="name">John's Leads</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', 'John Albert Grajo'),('type', '=', 'lead'), ('x_has_more_than_three_numbers', '=', True)
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+    <!--    Lead menu - iSW Form -->
+    <record model="ir.actions.act_window" id="crm_lead_isw_form">
+        <field name="name">From iSW Website</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('type', '=', 'lead'), ('tag_ids', 'ilike', 'From iSW Website')]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+<!--    start of month-->
+
+        <record model="ir.actions.act_window" id="crm_month_january">
+        <field name="name">January</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-01-31 11:59:59'), ('create_date', '&gt;', '2023-01-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+
+        <record model="ir.actions.act_window" id="crm_month_february">
+        <field name="name">February</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-02-28 11:59:59'), ('create_date', '&gt;', '2023-02-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+        <record model="ir.actions.act_window" id="crm_month_march">
+        <field name="name">March</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-03-31 11:59:59'), ('create_date', '&gt;', '2023-03-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+
+        <record model="ir.actions.act_window" id="crm_month_april">
+        <field name="name">April</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-04-30 11:59:59'), ('create_date', '&gt;', '2023-04-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+        <record model="ir.actions.act_window" id="crm_month_may">
+        <field name="name">May</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-05-31 11:59:59'), ('create_date', '&gt;', '2023-05-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+        <record model="ir.actions.act_window" id="crm_month_june">
+        <field name="name">June</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-06-30 11:59:59'), ('create_date', '&gt;', '2023-06-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+            <record model="ir.actions.act_window" id="crm_month_july">
+        <field name="name">July</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-07-31 11:59:59'), ('create_date', '&gt;', '2023-07-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+            <record model="ir.actions.act_window" id="crm_month_august">
+        <field name="name">August</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-08-31 11:59:59'), ('create_date', '&gt;', '2023-08-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+            <record model="ir.actions.act_window" id="crm_month_september">
+        <field name="name">September</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-09-30 11:59:59'), ('create_date', '&gt;', '2023-09-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+            <record model="ir.actions.act_window" id="crm_month_october">
+        <field name="name">October</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-10-31 11:59:59'), ('create_date', '&gt;', '2023-10-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+            <record model="ir.actions.act_window" id="crm_month_november">
+        <field name="name">November</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-11-30 11:59:59'), ('create_date', '&gt;', '2023-11-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+            <record model="ir.actions.act_window" id="crm_month_december">
+        <field name="name">December</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('create_date', '&lt;', '2023-12-31 11:59:59'), ('create_date', '&gt;', '2023-12-01 00:00:00')
+        ]</field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+
+     <!--    Timezone menu-->
+
+
+    <record model="ir.actions.act_window" id="crm_timezone_eastern">
+        <field name="name">Eastern Timezone ET</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'),
+            '|', ('tag_ids', 'ilike', 'connecticut'),
+            '|', ('tag_ids', 'ilike', 'delaware'),
+            '|', ('tag_ids', 'ilike', 'florida'),
+            '|', ('tag_ids', 'ilike', 'georgia'),
+            '|', ('tag_ids', 'ilike', 'indiana'),
+            '|', ('tag_ids', 'ilike', 'kentucky'),
+            '|', ('tag_ids', 'ilike', 'maine'),
+            '|', ('tag_ids', 'ilike', 'maryland'),
+            '|', ('tag_ids', 'ilike', 'massachusetts'),
+            '|', ('tag_ids', 'ilike', 'michigan'),
+            '|', ('tag_ids', 'ilike', 'new hampshire'),
+            '|', ('tag_ids', 'ilike', 'new jersey'),
+            '|', ('tag_ids', 'ilike', 'new york'),
+            '|', ('tag_ids', 'ilike', 'north carolina'),
+            '|', ('tag_ids', 'ilike', 'ohio'),
+            '|', ('tag_ids', 'ilike', 'pennsylvania'),
+            '|', ('tag_ids', 'ilike', 'rhode island'),
+            '|', ('tag_ids', 'ilike', 'south carolina'),
+            '|', ('tag_ids', 'ilike', 'tennessee'),
+            '|', ('tag_ids', 'ilike', 'vermont'),
+            '|', ('tag_ids', 'ilike', 'virginia'),
+            ('tag_ids', 'ilike', 'west virginia')
+            ]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_timezone_central">
+        <field name="name">Central Timezone CT</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'),
+            '|', ('tag_ids', 'ilike', 'alabama'),
+            '|', ('tag_ids', 'ilike', 'arkansas'),
+            '|', ('tag_ids', 'ilike', 'illinois'),
+            '|', ('tag_ids', 'ilike', 'indiana'),
+            '|', ('tag_ids', 'ilike', 'kansas'),
+            '|', ('tag_ids', 'ilike', 'kentucky'),
+            '|', ('tag_ids', 'ilike', 'louisiana'),
+            '|', ('tag_ids', 'ilike', 'michigan'),
+            '|', ('tag_ids', 'ilike', 'missouri'),
+            '|', ('tag_ids', 'ilike', 'north dakota'),
+            '|', ('tag_ids', 'ilike', 'south dakota'),
+            '|', ('tag_ids', 'ilike', 'nebraska'),
+            '|', ('tag_ids', 'ilike', 'oklahoma'),
+            '|', ('tag_ids', 'ilike', 'tennessee'),
+            '|', ('tag_ids', 'ilike', 'texas'),
+            ('tag_ids', 'ilike', 'wisconsin')
+            ]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="crm_timezone_mountain">
+        <field name="name">Mountain Timezone MT</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'),
+            '|', ('tag_ids', 'ilike', 'arizona'),
+            '|', ('tag_ids', 'ilike', 'colorado'),
+            '|', ('tag_ids', 'ilike', 'idaho'),
+            '|', ('tag_ids', 'ilike', 'kansas'),
+            '|', ('tag_ids', 'ilike', 'montana'),
+            '|', ('tag_ids', 'ilike', 'nebraska'),
+            '|', ('tag_ids', 'ilike', 'new mexico'),
+            '|', ('tag_ids', 'ilike', 'oregon'),
+            '|', ('tag_ids', 'ilike', 'texas'),
+            '|', ('tag_ids', 'ilike', 'utah'),
+            ('tag_ids', 'ilike', 'wyoming')
+            ]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_timezone_pacific">
+        <field name="name">Pacific Timezone PT</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'),
+            '|', ('tag_ids', 'ilike', 'california'),
+            '|', ('tag_ids', 'ilike', 'idaho'),
+            '|', ('tag_ids', 'ilike', 'nevada'),
+            '|', ('tag_ids', 'ilike', 'oregon'),
+            ('tag_ids', 'ilike', 'washington')
+            ]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_timezone_alaska">
+        <field name="name">Alaska Timezone AKT</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('tag_ids', 'ilike', 'alaska')]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_timezone_hawaii">
+        <field name="name">Hawaii - Aleutian Timezone HAST</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('user_id', '=', uid), ('type', '=', 'lead'), ('tag_ids', 'ilike', 'hawaii')]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+<!--    end of timezone action-->
+
+<!--start of phone validation -->
+
+
+
+<!--    start of phone validation-->
+
+   <record model="ir.actions.act_window" id="crm_valid_phone">
+        <field name="name">Valid Leads with less than 3 Phone Numbers</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('x_has_more_than_three_numbers', '=', True), '|',
+            ('type', '=', 'lead'), ('type', '=', False)]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm_invalid_phone">
+        <field name="name">Invalid Leads with less than 3 Phone Numbers</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">tree,kanban,graph,pivot,calendar,form,activity</field>
+        <field name="view_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="domain">[('x_has_more_than_three_numbers', '=', False), '|',
+            ('type', '=', 'lead'), ('type', '=', False)]
+        </field>
+        <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="context">{
+            'default_type':'lead',
+            'search_default_type': 'lead',
+            'search_default_to_process':1,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a Lead
+            </p>
+            <p>
+                Leads are the qualification step before the creation of an opportunity.
+            </p>
+        </field>
+    </record>
+
+
+<!--end of phone validation-->
+</odoo>

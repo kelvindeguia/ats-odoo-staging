@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <template id="web_form" name="iSupport Worldwide Applicant Survey">
+            <t t-call="website.layout">
+                <t t-set="no_copyright" t-value="True"/>
+                <t t-set="no_footer" t-value="True"/>
+                <div id="wrap" class="o_website_hr_recruitment_jobs_list" style="background-color: #f8f9fa; background-image: url('/web/image/177-6edcc31d/Referral%20Page%20BG'); background-size: cover; background-repeat: no-repeat; min-height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center;">
+                    <div class="form-floating" style="width: 50%; display: flex; flex-direction: column; align-items: center;" id="survey_code_section">
+                        <span id="survey_note" class="text-light" style="margin-top: 10px; margin-bottom: 10px; display: block; text-align: center;">Enter the provided survey code by the recruiter to validate your survey response.</span>  
+                        <input type="text" name="survey_code" id="survey_code" class="form-control" placeholder="e.g. Juan_Dela_Cruz-Y896A1s" required="required"/>
+                        <label for="survey_code" style="margin-top: 35px; text-align: center;">Survey Code</label>       
+                        <button class="btn btn-light btn-lg" style="margin-top: 10px;" role="button" onclick="validateSurveyCode()">Submit</button>
+                        <span id="validation_message" class="text-success" style="margin-top: 10px; display: none;">Code accepted!</span>           
+                    </div>
+                    <div class="bg-100 rounded">
+                        <div class="oe_structure pt-4" id="form_section" style="display:none;">
+                            <div class="panel panel-default" style="width: 100%; background-color: #1E5457; color: white; padding: 20px;">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title" style="color: white;">iSupport Worldwide Applicant Survey</h3>
+                                </div>
+                            </div>
+                            <div class="panel-body bg-400 mt-8" id="welcomePage" style="color: black; margin: 20px; padding-bottom: 5px">
+                                <div class="col-12" style="padding-left: 20px; padding-top: 30px;">
+                                    <h4>Welcome!</h4>
+                                    <p>Your privacy is important to us, and we are committed to protecting your personally identifiable information. This Privacy Policy explains how we collect, use, store, and protect your information when you complete our candidate questionnaire form. By providing your information, you consent to the practices described in this policy.</p>
+                                    
+                                    <h6>Information We Collect</h6>
+                                    <p>When you complete our candidate questionnaire form, we may collect the following types of information:</p>
+                                    <ul>
+                                        <li>Personally Identifiable Information: Full name, Email address, Phone number, Home address, Date of birth</li>
+                                        <li>Sensitive Personal Information: Health information, Background check information, Employment history, Educational history</li>
+                                    </ul>
+                                    
+                                    <h6>How We Use Your Information</h6>
+                                    <p>The information you provide will be used for the following purposes:</p>
+                                    <ul>
+                                        <li>To process and evaluate your job application</li>
+                                        <li>To verify your qualifications and references</li>
+                                        <li>To conduct background checks, if applicable</li>
+                                        <li>To communicate with you regarding your application status</li>
+                                        <li>To comply with legal and regulatory requirements</li>
+                                    </ul>
+                                    
+                                    <h6>Information Sharing and Disclosure</h6>
+                                    <p>We do not sell, rent, or trade your information to third parties. However, we may share your information with:</p>
+                                    <ul>
+                                        <li>Internal departments and personnel involved in the hiring process</li>
+                                        <li>Third-party service providers who assist with background checks and other employment-related services</li>
+                                        <li>Legal or law-enforcement authorities if required by law or sanctioned by the appropriate court order or warrant</li>
+                                    </ul>
+                                    
+                                    <h6>Data Security</h6>
+                                    <p>We implement appropriate technical and organizational measures to protect your information from unauthorized access, alteration, disclosure, or destruction. This includes encryption, secure storage, and restricted access to sensitive information.</p>
+                                    
+                                    <h6>Retention of Information</h6>
+                                    <p>We will retain your information for as long as necessary to fulfill the purposes for which it was collected, or as required by law. If your application is unsuccessful, we may retain your information for a period to consider you for future opportunities, unless you request otherwise. You have the right to Access your personal information, Request correction of inaccurate or incomplete information or Request deletion of your information, subject to legal requirements</p>
+                                    
+                                    <h6>Contact Us</h6>
+                                    <p>If you have any questions about this Privacy Policy or how your information is handled, please contact:</p>
+                                    <p>Ammex iSupport International Corporation/iSWerk International Corporation</p>
+                                    <p>Email: <a href="mailto:recruitmentops@isupportworldwide.com">recruitmentops@isupportworldwide.com</a></p>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;" id="consent_section">
+                                    <div class="bg-400" style="margin-right: 20px; padding-bottom: 5px">
+                                        <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; background-color: #1E5457; color: #fff;">1</span>
+                                        <p style="margin-left: 20px">By submitting your application and providing your information, you acknowledge that you have read, understood, and agree to the terms of this Privacy Policy.</p>
+                                        <p style="margin-left: 20px"> Please check the box below to indicate your consent:</p>  
+                                    </div>
+                                    <div class="form-check" style="padding-top: 10px;">
+                                        <input type="radio" id="consent" name="consent" value="Yes" class="form-check-input" required="required"/>
+                                        <label class="form-check-label" for="consent">I agree to the Privacy Policy and consent to the collection, use, and processing of my information as described above.</label>
+                                    </div>
+                                    <button class="btn btn-primary btn-lg" style="margin-top: 50px;" role="button" onclick="giveConsent()">Next</button>         
+                                </div>
+                            </div>
+                            <div class="container" id="candidate_form" style="display: none;">
+                                <form action="/candidate/website_thanks/" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <div class="form-group" id="personalQuestions" style="padding-bottom: 30px;">
+                                        <div class="form-group pt-4">
+                                            <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; margin-bottom: 10px; background-color: #1E5457; color: #fff;">2</span>
+                                            <label for="candidate_name">Name</label>
+                                            <input type="text" name="candidate_name" id="candidate_name" class="form-control"
+                                                placeholder="e.g. John Doe"
+                                                required="required" style="width: 50%" readonly="readonly"/>
+                                        </div>
+                                        <div class="form-group pt-4">
+                                            <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; margin-bottom: 10px; background-color: #1E5457; color: #fff;">3</span>
+                                            <label for="candidate_email">Email Address:</label>
+                                            <input type="email" name="candidate_email" id="candidate_email" class="form-control"
+                                                required="required" style="width: 50%" readonly="readonly"/>
+                                        </div>
+                                        <button class="btn btn-primary btn-lg" style="margin-top: 50px;" role="button" onclick="nextPage()">Next</button>
+                                    </div>
+                                    <div class="form-group" id="generalQuestions" style="display: none">
+                                        <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;">
+                                            <div class="bg-400" style="margin-right: 20px; padding-bottom: 5px">
+                                                <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; background-color: #1E5457; color: #fff;">4</span>
+                                                <p style="margin-left: 20px">Are you currently residing within Metro Manila?</p>  
+                                            </div>
+                                            <div class="form-check" style="padding-top: 10px;">
+                                                <input type="radio" id="residing_metro_manila" name="residing_metro_manila" value="yes" class="form-check-input" required="required"/>
+                                                <label class="form-check-label" for="residing_metro_manila">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" id="residing_metro_manila" name="residing_metro_manila" value="no" class="form-check-input" required="required"/>
+                                                <label class="form-check-label" for="residing_metro_manila">No</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;">
+                                            <div class="bg-400" style="margin-right: 20px; padding-bottom: 5px">
+                                                <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; background-color: #1E5457; color: #fff;">5</span>
+                                                <p style="margin-left: 20px">If not residing in Metro Manila, are you willing to relocate to Metro Manila for this position?</p>  
+                                            </div>
+                                            <div class="form-check" style="padding-top: 10px;">
+                                                <input type="radio" id="relocate" name="relocate" value="yes" class="form-check-input" required="required"/>
+                                                <label class="form-check-label" for="relocate">Yes</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" id="relocate" name="relocate" value="no" class="form-check-input" required="required"/>
+                                                <label class="form-check-label" for="relocate">No</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;">
+                                            <div class="bg-400" style="margin-right: 20px; padding-bottom: 10px">
+                                                <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; background-color: #1E5457; color: #fff;">6</span>
+                                                <p style="margin-left: 20px">Do you have any specific or obligatory appointments in the next twelve (12) months? Please check all that apply:</p>  
+                                            </div>
+                                            <div class="form-group">
+                                                <div>
+                                                    <input type="checkbox" name="obligatory_appointments" value="1"/> Educational or self-improvement activities such as seminars, short courses, or enrolment in higher education/additional degrees.<br/>
+                                                    <input type="checkbox" name="obligatory_appointments" value="2"/> Medical or health-related appointments such as follow-up examination sessions, rehabilitation, or treatment sessions, or surgery.<br/>
+                                                    <input type="checkbox" name="obligatory_appointments" value="3"/> Previously planned or scheduled trips including domestic or international vacations that may overlap with your work schedule.<br/>
+                                                    <input type="checkbox" name="obligatory_appointments" value="4"/> Commitments of a personal nature, including commitments to family.<br/>
+                                                    <input type="checkbox" name="obligatory_appointments" value="5"/> Previously confirmed temporary or part-time job or other employment.<br/>
+                                                    <input type="checkbox" name="obligatory_appointments" value="6"/> I have no previously scheduled appointments or commitments within the next twelve (12) months, and foresee no activity on my part that may conflict with my work schedule.<br/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;">
+                                            <div class="bg-400" style="margin-right: 20px; padding-bottom: 5px">
+                                                <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; margin-bottom: 10px; background-color: #1E5457; color: #fff;">7</span>
+                                                <label for="appointments_specification">If you ticked any of the first five items, please specify details:</label>
+                                            </div>
+                                            <textarea name="appointments_specification" id="appointments_specification" class="form-control" style="width: 90%" placeholder=" Enter your answer"></textarea>
+                                        </div>
+                                        <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;">
+                                            <div class="bg-400" style="margin-right: 20px; padding-bottom: 5px">
+                                                <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; margin-bottom: 10px; background-color: #1E5457; color: #fff;">8</span>
+                                                <label for="diagnosed" style="margin-left: 10px;">Have you been previously diagnosed with or treated for any medical condition, which, if left untreated, may adversely affect your ability to perform the duties and responsibilities attendant to the position for which you are applying? If so, please specify.</label>
+                                            </div>
+                                            <textarea name="diagnosed" id="diagnosed" class="form-control" style="width: 90%" placeholder=" Enter your answer" required="required"></textarea>
+                                        </div>
+                                        <div class="form-group pt-12" style="padding-left: 20px; padding-top: 15px; padding-bottom: 20px;">
+                                            <div class="bg-400" style="margin-right: 20px; padding-bottom: 5px">
+                                                <span style="display: inline-block; width: 30px; height: 30px; line-height: 30px; border: 1px solid #000; text-align: center; margin-top: 10px; margin-left: 20px; margin-bottom: 10px; background-color: #1E5457; color: #fff;">9</span>
+                                                <label for="medical_condition" style="margin-left: 10px;">Do you presently have any medical condition, physical injury, impairment, or disability that may in any manner adversely affect your ability to adequately and satisfactorily perform the duties and responsibilities attendant to the position for which you are applying? If so, please specify.</label>
+                                            </div>
+                                            <textarea name="medical_condition" id="medical_condition" class="form-control" style="width: 90%" placeholder=" Enter your answer" required="required"></textarea>
+                                        </div>
+                                        <div class="form-group pt-4 pb-5">
+                                            <input type="submit" value="Submit" class="btn btn-primary pull-left" id="submitButton"/>
+                                            <span class="ps-3" id="s_website_form_result" style="color: red;"></span>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </t>
+                <script>
+                    function validateSurveyCode() {
+                        var survey_code = document.getElementById("survey_code").value;
+                    
+                        odoo.define('hr_recruitment.survey_code_validation', function (require) {
+                            "use strict";
+                    
+                            var ajax = require('web.ajax');
+                    
+                            // Perform the AJAX call
+                            ajax.jsonRpc('/check_survey_code', 'call', {'survey_code': survey_code})
+                                .then(function(result) {
+                                    if (result.exists) {
+                                        // Set default values for the input fields
+                                        document.getElementById("candidate_name").value = result.candidate_name || '';
+                                        document.getElementById("candidate_email").value = result.candidate_email || '';
+                    
+                                        // Display validation message
+                                        document.getElementById("validation_message").style.display = "block";
+                    
+                                        setTimeout(function() {
+                                            document.getElementById("form_section").style.display = "block";
+                                            document.getElementById("survey_code_section").style.display = "none";
+                                        }, 2000); // 2000 milliseconds = 2 seconds
+                                    } else {
+                                        alert('Invalid Survey Code. Please input the correct one.');
+                                        document.getElementById("survey_code").value = "";
+                                        
+                                        // Reload the page to reset the state
+                                        location.reload();
+                                    }
+                                })
+                                .catch(function(error) {
+                                    console.error('Error occurred:', error);
+                                    alert('An error occurred while validating the survey code. Please try again.');
+                                    
+                                    // Reload the page to reset the state
+                                    location.reload();
+                                });
+                        });
+                    }
+                    function giveConsent() {
+                        var consentChecked = document.getElementById('consent').checked;
+                        if (consentChecked) {
+                            setTimeout(function() {
+                                document.getElementById('consent_section').style.display = 'none';
+                                document.getElementById('welcomePage').style.display = 'none';
+                                document.getElementById('candidate_form').style.display = 'block';
+                            }, 1000); // 1000 milliseconds = 1 second
+                        } else {
+                            alert('Please provide your consent to proceed.');
+                        }
+                    }
+                    function nextPage() {
+                        setTimeout(function() {
+                            document.getElementById('personalQuestions').style.display = 'none';
+                            document.getElementById('generalQuestions').style.display = 'block';
+                        }, 1000); // 1000 milliseconds = 1 second
+                    }
+                    
+                    document.addEventListener('DOMContentLoaded', function() {
+                        if (window.history &amp;&amp; window.history.pushState) {
+                            // Push the current state to the history
+                            window.history.pushState({page: 1}, null, window.location.href);
+    
+                            // Handle popstate event
+                            window.onpopstate = function(event) {
+                                // Redirect to the desired page
+                                window.location.href = '/candidate/';
+                            };
+                        }
+                    });
+                    function nextPage() {
+                        var nameField = document.getElementById('candidate_name').value.trim();
+                        var emailField = document.getElementById('candidate_email').value.trim();
+                    
+                        if (!nameField) {
+                            alert('Please enter your name.');
+                            return false;
+                        }
+                    
+                        if (!emailField) {
+                            alert('Please enter your email address.');
+                            return false;
+                        }
+                    
+                        setTimeout(function() {
+                            document.getElementById('personalQuestions').style.display = 'none';
+                            document.getElementById('generalQuestions').style.display = 'block';
+                        }, 1000); // 1000 milliseconds = 1 second
+                    }
+
+                    function validateObligatoryAppointments() {
+                        var checkboxes = document.querySelectorAll('input[name="obligatory_appointments"]');
+                        var isChecked = false;
+                    
+                        checkboxes.forEach(function(checkbox) {
+                            if (checkbox.checked) {
+                                isChecked = true;
+                            }
+                        });
+                    
+                        if (!isChecked) {
+                            alert("Please select at least one obligatory appointment.");
+                            return false; // Prevent form submission
+                        }
+                    
+                        // Additional validation: If "No appointments" is selected (value 6), make sure the "appointments_specification" field is empty
+                        var noAppointmentsChecked = document.querySelector('input[name="obligatory_appointments"][value="6"]').checked;
+                        var appointmentsSpecification = document.getElementById("appointments_specification").value.trim();
+                    
+                        if (noAppointmentsChecked &amp;&amp; appointmentsSpecification !== "") {
+                            alert("Please clear the 'appointments_specification' field if you selected 'No appointments'.");
+                            return false; // Prevent form submission
+                        }
+                    
+                        return true; // Allow form submission
+                    }
+                    
+                    // Attach the validation function to the form's submit event
+                    document.querySelector('form').addEventListener('submit', function(event) {
+                        if (!validateObligatoryAppointments()) {
+                            event.preventDefault(); // Prevent form submission if validation fails
+                        }
+                    });
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Get the submit button element
+                        var form = document.getElementById('candidateForm');
+                        var submitButton = document.getElementById('submitButton');
+                
+                        // Add a click event listener to disable the button on the first click
+                        submitButton.addEventListener('click', function () {
+                            // Prevent the default form submission (in case the form is being submitted in another way)
+                            event.preventDefault();
+                            
+                            // Disable the button
+                            submitButton.disabled = true;
+                
+                            // Optionally, change the text to indicate it's been clicked
+                            submitButton.value = 'Submitting...';
+                            
+                            // Submit the form
+                            form.submit();
+                        });
+                    });
+                </script>
+        </template>
+
+    <record id="candidate_thanks" model="website.page">
+        <field name="name">Candidate Thanks</field>
+        <field name="type">qweb</field>
+        <field name="url">/candidate/thank_you/</field>
+        <field name="website_published">True</field>
+        <field name="key">hr_recruitment.candidate_thanks</field>
+        <field name="arch" type="xml">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="container">
+                        <h1>Thank you!</h1>
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="alert alert-success" role="status">
+                                    We've received your submission.
+                                </div>
+                                <a class="btn btn-primary" href="/">Go to open home page</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </field>
+    </record>
+
+    </data>
+</odoo>

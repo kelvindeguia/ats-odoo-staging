@@ -1,0 +1,40 @@
+<odoo>
+    <data>
+        <template id="job_search" name="Job search">
+            <form action="/jobs/search_content" method="post">
+                <div class="input-group" style="padding-top:15px;padding-bottom:15px;padding-left: 20%;padding-right:20%;">
+                    <input type="text" name="search" class="search_query" widget="auto_fill"
+                           placeholder="Search for a job position" t-att-value="search" style="text-align:center;width:100%;border-radius:15px;"/>
+                    <button type='submit' name="searching_jobs" class="btn btn-primary oe_search_job"
+                            aria-label="Search" title="Search">
+                        <i class="fa fa-search"/>
+                    </button>
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                </div>
+            </form>
+        </template>
+        <template id="job_search_inherit" name="Job searchbox"
+                  customize_show="True" active="True" inherit_id="website_hr_recruitment.index">
+            <xpath expr="//div[@class='container oe_website_jobs']" position="before">
+                <t t-call="odoo_website_job_search.job_search">
+                </t>
+            </xpath>
+        </template>        
+        
+        <template id="404">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure oe_empty">
+                        <div class="container">
+                            <h1 class="mt32">Job not found!</h1>
+                            <p>Sorry, this job is not available.</p>
+                            <p>
+                                <a t-attf-href="jobs">Return to the jobs list.</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+    </data>
+</odoo>

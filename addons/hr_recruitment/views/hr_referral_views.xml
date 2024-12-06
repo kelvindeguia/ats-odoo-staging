@@ -1,0 +1,347 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <!-- Transfer to all applicants action -->
+    <record id="action_server_transfer_referral" model="ir.actions.server">
+        <field name="name">Transfer to all applicants</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_hr_referral"/>
+        <field name="binding_model_id" ref="model_hr_referral"/>
+        <field name="state">code</field>
+        <field name="code">records.transfer_records_applicants()</field>
+    </record>
+
+    <!--    Referral form page layout-->
+    <template id="test_form_2" name="Refer Now!">
+        <t t-call="website.layout">
+            <t t-set="no_copyright" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div id="wrap" class="o_website_hr_recruitment_jobs_list bg-100">
+                <section class="pt48 pb32 o_colored_level bg-black-15 oe_img_bg o_bg_img_center"
+                         style="position: relative; background-image: url('/web/image/6816-4cfcd3b4/background.png');"
+                         data-oe-shape-data="{&quot;shape&quot;:&quot;web_editor/Origins/02_001&quot;,&quot;flip&quot;:[]}"
+                         data-original-id="6816" data-original-src="/web/image/6816-4cfcd3b4/background.png"
+                         data-mimetype="image/png" data-resize-width="1820">
+                    <div class="container">
+                        <div class="row o_grid_mode" style="" data-row-count="8">
+                            <div class="text-center o_colored_level o_grid_item g-col-lg-12 g-height-3 col-lg-12"
+                                 style="z-index: 1; grid-area: 6 / 1 / 9 / 13;">
+                                <h3 class="text-muted">
+                                    <span style="font-size: 24px;">
+                                        <font class="text-o-color-3">
+                                        </font>
+                                    </span>
+                                    <br/>
+                                </h3>
+                                <h2>
+                                    <font class="text-o-color-3"
+                                          style="color: rgb(246, 246, 246) !important;background-color: rgba(0, 0, 0, 0)">
+
+                                    </font>
+                                    <br/>
+                                </h2>
+                                <a class="btn btn-light btn-lg" href="/jobs" role="button">APPLY NOW!</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure pt-4">
+                    <div class="container">
+                        <t t-if="request.session.get('job_name')">
+                            <p style="font-weight: bold; font-size: 30px;">
+                                <t t-esc="request.session.get('job_name')"/>
+                            </p>
+                        </t>
+                        <form action="/referral/website_thanks/" method="POST" enctype="multipart/form-data"
+                              redirect="/website_thanks/">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group pt-4">
+                                <label for="emp_name">Employee Name</label>
+                                <input type="text" name="emp_name" id="emp_name" class="form-control"
+                                       placeholder="e.g. John Doe"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="employee_email">Employee Email Address:</label>
+                                <input type="email" name="employee_email" id="employee_email" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="emp_id">Employee ID</label>
+                                <input type="number" name="emp_id" class="form-control" id="emp_id"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="emp_account">Employee Account/Program/Department</label>
+                                <input type="text" name="emp_account" id="emp_account" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="name">Candidate Name</label>
+                                <input type="text" name="name" id="name" class="form-control" required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="email">Candidate Valid Email Address:</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="mobile_number">Candidate Mobile Number:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+63</span>
+                                    </div>
+                                    <input type="number" name="mobile_number" id="mobile_number"
+                                           placeholder="e.g. 9123456789" class="form-control" required="required"/>
+                                </div>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="desired_position">Position Applying for:</label>
+                                <input type="text" name="desired_position" id="desired_position" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="resume">Resume (PDF or Word Document):</label>
+                                <input type="file" name="resume" id="resume" class="form-control"
+                                       accept=".pdf, .doc, .docx"
+                                       required="required"/>
+                            </div>
+                            <input type="hidden" name="job_id" t-att-value="request.session.get('job_id')"/>
+                            <input type="hidden" name="department_id" t-att-value="request.session.get('department_id')"/>
+                            <div class="form-group pt-4 pb-5">
+                                <input type="submit" value="Submit" class="btn btn-primary pull-left" id="submitButton"/>
+                                <span class="ps-3" id="s_website_form_result" style="color: red;"></span>
+                            </div>
+                            <script type="text/javascript">
+                                // Handle the response from form submission
+                                function handleResponse(response) {
+                                    var submitButton = document.getElementById("submitButton");
+
+                                    if (response.status === 400 || response.status === 401) {
+                                        response.text().then(function (errorMessage) {
+                                            // Extract the error message from the traceback
+                                            var errorMatch = /Error message:([\s\S]*?)\n/.exec(errorMessage);
+                                            var errorContainer = document.getElementById("s_website_form_result");
+
+                                            if (errorMatch &amp; errorMatch.length &gt; 1) {
+                                                var errorMessage = errorMatch[1].trim();
+                                                errorContainer.textContent = errorMessage;
+                                            } else {
+                                                errorContainer.textContent = "An error occurred. Please try again.";
+                                            }
+                                        });
+                                    } else {
+                                        window.location.href = '/website_thanks/';
+                                    }
+
+                                    // Re-enable the submit button after handling the response
+                                    submitButton.disabled = false;
+                                }
+                            </script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- OLD REFERRAL TEMPLATE BACKUP -->
+<!--    Referral form page layout-->
+    <!-- <template id="test_form_2" name="Refer Now!">
+        <t t-call="website.layout">
+            <t t-set="no_copyright" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div id="wrap" class="o_website_hr_recruitment_jobs_list bg-100">
+                <section class="pt48 pb32 o_colored_level bg-black-15 oe_img_bg o_bg_img_center"
+                         style="position: relative; background-image: url('/web/image/6816-4cfcd3b4/background.png');"
+                         data-oe-shape-data="{&quot;shape&quot;:&quot;web_editor/Origins/02_001&quot;,&quot;flip&quot;:[]}"
+                         data-original-id="6816" data-original-src="/web/image/6816-4cfcd3b4/background.png"
+                         data-mimetype="image/png" data-resize-width="1820">
+                    <div class="container">
+                        <div class="row o_grid_mode" style="" data-row-count="8">
+                            <div class="text-center o_colored_level o_grid_item g-col-lg-12 g-height-3 col-lg-12"
+                                 style="z-index: 1; grid-area: 6 / 1 / 9 / 13;">
+                                <h3 class="text-muted">
+                                    <span style="font-size: 24px;">
+                                        <font class="text-o-color-3">
+                                        </font>
+                                    </span>
+                                    <br/>
+                                </h3>
+                                <h2>
+                                    <font class="text-o-color-3"
+                                          style="color: rgb(246, 246, 246) !important;background-color: rgba(0, 0, 0, 0)">
+
+                                    </font>
+                                    <br/>
+                                </h2>
+                                <a class="btn btn-light btn-lg" href="/jobs" role="button">APPLY NOW!</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="oe_structure pt-4">
+                    <div class="container">
+                        <form action="/referral/website_thanks/" method="POST" enctype="multipart/form-data"
+                              redirect="/website_thanks/">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group pt-4">
+                                <label for="emp_name">Employee Name</label>
+                                <input type="text" name="emp_name" id="emp_name" class="form-control"
+                                       placeholder="e.g. John Doe"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="employee_email">Employee Email Address:</label>
+                                <input type="email" name="employee_email" id="employee_email" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="emp_id">Employee ID</label>
+                                <input type="number" name="emp_id" class="form-control" id="emp_id"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="emp_account">Employee Account/Program/Department</label>
+                                <input type="text" name="emp_account" id="emp_account" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="name">Candidate Name</label>
+                                <input type="text" name="name" id="name" class="form-control" required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="email">Candidate Valid Email Address:</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="mobile_number">Candidate Mobile Number:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+63</span>
+                                    </div>
+                                    <input type="number" name="mobile_number" id="mobile_number"
+                                           placeholder="e.g. 9123456789" class="form-control" required="required"/>
+                                </div>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="desired_position">Position Applying for:</label>
+                                <input type="text" name="desired_position" id="desired_position" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="resume">Resume (PDF or Word Document):</label>
+                                <input type="file" name="resume" id="resume" class="form-control"
+                                       accept=".pdf, .doc, .docx"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4 pb-5">
+                                <input type="submit" value="Submit" class="btn btn-primary pull-left" id="submitButton"/>
+                                <span class="ps-3" id="errorContainer" style="color: red;"></span>
+                            </div>
+                            <script>
+                                // Function to handle the response and display error
+                                function handleResponse(response) {
+                                    var submitButton = document.getElementById("submitButton");
+                            
+                                    if (response.status === 400 || response.status === 401) {
+                                        response.text().then(function (errorMessage) {
+                                            // Display the error message in the error container
+                                            var errorContainer = document.getElementById("errorContainer");
+                                            errorContainer.textContent = errorMessage;
+                                        });
+                                    } else {
+                                        window.location.href = '/website_thanks/';
+                                    }
+                            
+                                    // Re-enable the submit button after handling the response
+                                    submitButton.disabled = false;
+                                }
+                            
+                                // Assuming you have an event listener for form submission
+                                // Replace this with your actual event listener
+                                document.querySelector('form').addEventListener('submit', function (event) {
+                                    event.preventDefault(); // Prevent the default form submission
+                            
+                                    var submitButton = document.getElementById("submitButton");
+                            
+                                    // Disable the submit button
+                                    submitButton.disabled = true;
+                            
+                                    // Fetch the form data and submit it
+                                    fetch('/referral/website_thanks/', {
+                                        method: 'POST',
+                                        body: new FormData(event.target),
+                                        headers: {
+                                            'X-CSRF-Token': '{{ request.csrf_token() }}'
+                                        }
+                                    })
+                                    .then(handleResponse)
+                                    .catch(function (error) {
+                                        console.error('Error:', error);
+                            
+                                        // Re-enable the submit button in case of an error
+                                        submitButton.disabled = false;
+                                    });
+                                });
+                            </script>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template> -->
+
+    <record id="referral_thanks" model="website.page">
+            <field name="name">Referral Thanks</field>
+            <field name="type">qweb</field>
+            <field name="url">/website_thanks/</field>
+            <field name="website_published">True</field>
+            <field name="key">hr_recruitment.referral_thanks</field>
+            <field name="arch" type="xml">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container">
+                            <h1>Thank you!</h1>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="alert alert-success" role="status">
+                                        We've received your referral.
+                                    </div>
+                                    <a class="btn btn-primary" href="/referral">Submit another referral</a>
+                                    <a class="btn btn-primary" href="/">Go to open positions</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </field>
+        </record>
+
+        <record id="duplicate_entry" model="website.page">
+            <field name="name">Duplicate Entry</field>
+            <field name="type">qweb</field>
+            <field name="url">/duplicate_entry/</field>
+            <field name="website_published">True</field>
+            <field name="key">hr_recruitment.duplicate_entry</field>
+            <field name="arch" type="xml">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container">
+                            <h1>Please try another!</h1>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="alert alert-danger" role="status">
+                                        The referral you've submitted was already in the system, please try another.
+                                    </div>
+                                    <a class="btn btn-primary" href="/referral">Submit another referral</a>
+                                    <a class="btn btn-primary" href="/">Go to open positions</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </field>
+        </record>    
+</odoo>

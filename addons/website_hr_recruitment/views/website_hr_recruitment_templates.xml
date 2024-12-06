@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="index" name="Jobs">
+    <t t-call="website.layout">
+        <div id="wrap" class="o_website_hr_recruitment_jobs_list bg-100">
+            <div class="oe_structure">
+                <section class="pt48 pb32 bg-200">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2 class="h1 text-secondary">Our Job Offers</h2>
+                                <h3 class="text-muted">Join us and help disrupt the enterprise market!</h3>
+                                <p>
+                                    Join us, we offer you an extraordinary chance to learn, to
+                                    develop and to be part of an exciting experience and
+                                    team.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="container oe_website_jobs">
+                <div class="row pt48 pb48">
+                    <div class="d-none" id="jobs_grid_left">
+
+                    </div>
+                    <div class="col-lg" id="jobs_grid">
+                        <div t-if="not jobs">
+                            <div class="text-center text-muted">
+                                <h3 class="css_editable_hidden"><a t-attf-href="/contactus">Contact us</a> for job opportunities.</h3>
+                                <h4 groups="hr_recruitment.group_hr_recruitment_manager">
+                                    Create new job pages from the <strong><i>+New</i></strong> top-right button.
+                                </h4>
+                            </div>
+                        </div>
+                        <a t-foreach="jobs" t-as="job" t-attf-href="/jobs/detail/#{ slug(job) }" t-attf-class="text-decoration-none#{' mt-3' if job_index else ''}">
+                            <div class="card card-default mb32">
+                                <div class="card-body" t-att-data-publish="job.website_published and 'on' or 'off'">
+                                    <span t-if="not job.website_published" class="badge text-bg-danger mb8 p-2">unpublished</span>
+                                    <h3 class="text-secondary mt0 mb4">
+                                        <span t-field="job.name"/>
+                                    </h3>
+                                    <h5 t-if="job.no_of_recruitment &gt;= 1">
+                                        <t t-esc="job.no_of_recruitment"/> open positions
+                                    </h5>
+                                    <div t-if="editable"
+                                        t-field="job.description"
+                                        class="mt16 mb0 css_non_editable_mode_hidden"/>
+                                    <div t-esc="job.description or ''"
+                                        class="mt16 mb0 css_editable_mode_hidden o_website_hr_recruitment_job_description"
+                                    />
+                                    <div class="o_job_infos mt16">
+                                        <span t-field="job.address_id" t-options='{
+                                            "widget": "contact",
+                                            "fields": ["address"],
+                                            "no_tag_br": True
+                                            }'/>
+                                        <div t-if="job.contract_type_id">
+                                            <i class="fa fa-fw fa-suitcase" title="Employment type" role="img" aria-label="Employment type"/><span t-field="job.contract_type_id"/>
+                                        </div>
+                                        <div>
+                                            <i class="fa fa-fw fa-clock-o" title="Publication date" role="img" aria-label="Publication date"/><span t-field="job.write_date"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>
+
+<template id="detail" name="Job Detail" track="1">
+    <t t-call="website.layout">
+        <t t-set="additional_title">Job Detail</t>
+        <div id="wrap" class="js_hr_recruitment">
+            <!-- Breadcrumb -->
+            <section class="bg-200">
+                <div class="container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb ps-0">
+                            <li class="breadcrumb-item"><a href="/jobs" class="text-secondary fw-bold">Jobs</a></li>
+                            <li class="breadcrumb-item active" aria-current="page"><span t-field="job.name"/></li>
+                        </ol>
+                    </nav>
+                </div>
+            </section>
+            <!-- Job name -->
+            <section class="pb32">
+                <div class="container">
+                    <div class="mt32">
+                        <div class="float-end">
+                            <a role="button" t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg float-end">Apply Now!</a>
+                        </div>
+                        <h1 t-field="job.name"/>
+                        <h5 class="fw-light" t-field="job.address_id" t-options='{
+                            "widget": "contact",
+                            "fields": ["city"],
+                            "no_tag_br": True
+                        }'/>
+                    </div>
+                </div>
+            </section>
+
+            <div t-field="job.website_description"/>
+
+            <div class="oe_structure">
+                <section class="o_job_bottom_bar mt32 mb32">
+                    <div class="text-center">
+                        <a role="button" t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">Apply Now!</a>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </t>
+</template>
+
+<template id="apply">
+    <t t-call="website.layout">
+        <t t-set="additional_title">Apply Job</t>
+
+        <div id="wrap"  class="container">
+            <nav aria-label="breadcrumb" class="mt-5">
+                <ol class="breadcrumb ps-0 mb-0 pb-1">
+                    <li class="breadcrumb-item"><a href="/jobs" class="text-secondary fw-bold">Jobs</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><span t-field="job.name"/></li>
+                </ol>
+            </nav>
+            <h1 class="mb-4">
+                Job Application Form
+            </h1>
+            <span class="hidden" data-for="hr_recruitment_form" t-att-data-values="{'department_id': job and job.department_id.id or '', 'job_id': job and job.id or ''}" />
+            <div id="jobs_section" class="container">
+                <div class="row">
+                    <section id="forms" class="col-12 col-md-9 s_website_form" data-vcss="001" data-snippet="s_website_form">
+                        <div class="container">
+                            <form id="hr_recruitment_form" action="/website/form/" method="post"
+                                enctype="multipart/form-data" class="o_mark_required row"
+                                data-mark="*" data-model_name="hr.applicant"
+                                data-success-mode="redirect" data-success-page="/job-thank-you"
+                                hide-change-model="true">
+                                <div class="s_website_form_rows row s_col_no_bgcolor">
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_required s_website_form_model_required"
+                                        data-type="char" data-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment1">
+                                                <span class="s_website_form_label_content">Your Name</span>
+                                                <span class="s_website_form_mark"> *</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="recruitment1" type="text"
+                                                    class="form-control s_website_form_input"
+                                                    name="partner_name" required=""
+                                                    data-fill-with="name"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_required"
+                                        data-type="email" data-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment2">
+                                                <span class="s_website_form_label_content">Your Email</span>
+                                                <span class="s_website_form_mark"> *</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="recruitment2" type="email"
+                                                    class="form-control s_website_form_input"
+                                                    name="email_from" required=""
+                                                    data-fill-with="email"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_required"
+                                        data-type="char" data-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment3">
+                                                <span class="s_website_form_label_content">Your Phone Number</span>
+                                                <span class="s_website_form_mark"> *</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="recruitment3" type="tel"
+                                                    class="form-control s_website_form_input"
+                                                    name="partner_mobile" required=""
+                                                    data-fill-with="phone"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_required"
+                                        data-type="char" data-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment4">
+                                                <span class="s_website_form_label_content">LinkedIn Profile</span>
+                                            </label>
+                                            <div class="col-sm" style="position: relative">
+                                                <i class="fa fa-linkedin fa-2x m-1 o_linkedin_icon"></i>
+                                                <input id="recruitment4" type="text"
+                                                    class="form-control s_website_form_input pl64"
+                                                    placeholder="e.g. https://www.linkedin.com/in/fpodoo/"
+                                                    style="padding-left: 40px"
+                                                    name="linkedin_profile"
+                                                    data-fill-with="linkedin_profile"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_custom"
+                                        data-type="binary" data-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment6">
+                                                <span class="s_website_form_label_content">Resume</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="recruitment6" type="file"
+                                                    class="form-control s_website_form_input o_resume_input"
+                                                    name="Resume"/>
+                                            </div>
+                                        </div>
+                                        <span class="text-muted" style="margin-left: 200px; font-size: 0.8rem">The resume is optional if you have a Linkedin profile</span>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field"
+                                        data-type="text" data-name="Field">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment5">
+                                                <span class="s_website_form_label_content">Short Introduction</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <textarea id="recruitment5"
+                                                    class="form-control s_website_form_input"
+                                                    placeholder="Optional introduction, or any question you might have about the job…"
+                                                    name="description" rows="5"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_dnone">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment7">
+                                                <span class="s_website_form_label_content">Job</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="recruitment7" type="hidden"
+                                                    class="form-control s_website_form_input"
+                                                    name="job_id"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-0 py-2 s_website_form_field s_website_form_dnone">
+                                        <div class="row s_col_no_resize s_col_no_bgcolor">
+                                            <label class="col-4 col-sm-auto s_website_form_label" style="width: 200px" for="recruitment8">
+                                                <span class="s_website_form_label_content">Department</span>
+                                            </label>
+                                            <div class="col-sm">
+                                                <input id="recruitment8" type="hidden"
+                                                    class="form-control s_website_form_input"
+                                                    name="department_id"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 s_website_form_submit mb64" data-name="Submit Button">
+                                        <div style="width: 200px" class="s_website_form_label"/>
+                                        <a href="#" role="button" class="btn btn-primary btn-lg s_website_form_send">Submit Application</a>
+                                        <span id="s_website_form_result"></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                    <section class="col-12 col-md-3 ps-5">
+                        <a role="button" t-attf-href="/jobs/detail/#{slug(job)}" class="btn btn-outline-primary btn-lg mb16 o_apply_description_link">
+                            <i class="fa fa-arrow-left"></i> Job Description
+                        </a>
+                        <div t-if="job.name" class="d-flex flex-column align-items-baseline">
+                            <span class="text-muted small">Job</span>
+                            <h6 t-field="job.name"/>
+                        </div>
+                        <div t-if="job.address_id" class="d-flex flex-column align-items-baseline">
+                            <span class="text-muted small">Location</span>
+                            <h6 t-field="job.address_id" t-options='{
+                                "fields": ["city"],
+                                "no_tag_br": True
+                            }'/>
+                        </div>
+                        <div t-if="job.department_id" class="d-flex flex-column align-items-baseline">
+                            <span class="text-muted small">Department</span>
+                            <h6 t-field="job.department_id"/>
+                        </div>
+                        <div t-if="job.contract_type_id" class="d-flex flex-column align-items-baseline">
+                            <span class="text-muted small">Employment Type</span>
+                            <h6 t-field="job.contract_type_id"/>
+                        </div>
+                        <hr t-if="job.job_details" class="w-50 my-3"/>
+                        <div t-field="job.job_details"/>
+                    </section>
+                </div>
+            </div>
+            <div class="oe_structure mt-2"/>
+        </div>
+    </t>
+</template>
+
+<template id="default_website_description">
+    <!-- Description text and ratings -->
+    <section class="s_text_image pt32 pb32 o_colored_level" data-snippet="s_image_text"
+        data-name="Image - Text" style="background-image: none;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 pt16 pb16 o_colored_level">
+                    <img
+                        src="/web/image/5051-64fd25ac/1692779628142.jfif?access_token=f148e9c8-5677-4962-bc3f-4831bf15e571"
+                        class="img img-fluid mx-auto o_we_custom_image" data-original-id="5050"
+                        data-original-src="/web/image/5050-60f94b63/1692779628142.jfif"
+                        data-mimetype="image/jpeg" data-resize-width="690" loading="lazy"/>
+                </div>
+                <div class="col-lg-6 pt16 pb16 o_colored_level">
+                    <h2>Join our team!</h2>
+                    <p>
+
+                        <span style="font-size:11.0pt" class="job-description-text">​We are seeking an experienced and
+                            dynamic Client Services Director to lead and oversee our client
+                            engagement strategies and relationships within our reputable
+                            offshoring company. The ideal candidate will possess a strong
+                            background in client services management, a deep understanding of
+                            offshoring operations, and a proven track record of driving
+                            exceptional customer satisfaction, business growth, sales, and
+                            account building.
+                        </span>
+                    </p>
+                    <p>
+                        <a href="https://isupportworldwide.com/category/career/" class="mb-2 btn btn-primary">Discover
+                            more</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="o_colored_level pt0" style="background-image: none;">
+        <div
+            class="container o_colored_level o_animate o_visible o_grid_item o_anim_slide_in o_anim_from_right shadow"
+            style="--wanim-intensity: 39; grid-area: 1 / 1 / auto / 13; z-index: 1; box-shadow: rgb(56, 62, 69) 0px 6px 12px 0px !important;">
+            <p class="lead">
+                <strong>
+                    <span style="font-size: 24px;">
+                        <span style="font-size: 24px;">
+                            <strong>What is your mission?</strong>
+                        </span>
+                    </span>
+                </strong>
+            </p>
+            <p>
+                <span style="font-size: 18px;">As the Client Services Director, you will play a
+                    pivotal role in cultivating and strengthening our client partnerships,
+                    ensuring seamless service delivery, driving sales initiatives, and building
+                    lasting accounts. You will lead a team of client services professionals,
+                    collaborate cross-functionally, and drive initiatives that enhance our
+                    clients' overall experience while aligning with the company's strategic
+                    goals.</span>
+            </p>
+            <p>
+                <span style="font-size: 18px;">You will provide the best service to our partner
+                    brands by performing these tasks:</span>
+            </p>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Client Relationship Management</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Establish and nurture strong relationships
+                        with key clients, acting as a trusted advisor and strategic partner.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Understand clients' business objectives,
+                        challenges, and opportunities, and propose tailored solutions that align
+                        with their needs.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Proactively identify upsell and cross-sell
+                        opportunities to expand the scope of services provided.</span>
+                </li>
+            </ul>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Sales and Account Building</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Drive sales efforts by identifying new
+                        business opportunities, presenting solutions, and negotiating contracts.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Develop and execute account management
+                        strategies to foster long-term partnerships and maximize client
+                        retention.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Collaborate with the sales team to align
+                        sales strategies with client needs and ensure a seamless transition from
+                        sales to service.</span>
+                </li>
+            </ul>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Team Leadership and Development</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Lead and inspire a team of client services
+                        managers, fostering a culture of excellence, collaboration, and
+                        continuous improvement.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Provide coaching, mentorship, and
+                        professional development to team members, ensuring their growth and
+                        success.</span>
+                </li>
+            </ul>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Service Delivery Excellence</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Ensure that client expectations are
+                        consistently met or exceeded by monitoring service performance and
+                        resolving any issues that arise.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Collaborate closely with operations teams to
+                        ensure seamless execution of services, quality assurance, and adherence
+                        to SLAs.</span>
+                </li>
+            </ul>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Strategic Planning</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Develop and execute strategic client
+                        engagement plans, identifying opportunities to enhance value, optimize
+                        processes, and drive operational efficiency.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Collaborate with senior leadership to align
+                        client services strategies with the overall company goals.</span>
+                </li>
+            </ul>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Client Communication and Reporting</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Act as the primary point of contact for
+                        escalated client inquiries, concerns, or feedback, ensuring prompt and
+                        effective resolution.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Provide regular status updates, performance
+                        reports, and insights to clients to demonstrate the value delivered by
+                        our services.</span>
+                </li>
+            </ul>
+            <p>
+                <strong style="font-weight: var(--cib7hk48)">
+                    <span style="font-size: 18px;">Market Insights and Innovation</span>
+                </strong>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Stay informed about industry trends,
+                        competition, and market dynamics, and proactively recommend strategies
+                        to stay ahead of the curve.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Identify and propose innovative solutions and
+                        offerings that add value to clients' operations and address evolving
+                        needs.</span>
+                </li>
+            </ul>
+            <p>
+                <span style="font-size: 24px;">
+                    <strong>Who are we looking for?</strong>
+                </span>
+            </p>
+            <ul>
+                <li>
+                    <span style="font-size: 18px;">Proven experience (8 years) in a senior
+                        client services role within an offshoring, outsourcing, or similar
+                        industry.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Demonstrated success in managing complex
+                        client relationships, driving client satisfaction, achieving revenue
+                        growth, and building accounts.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Strong understanding of offshoring
+                        operations, processes, and best practices.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Exceptional leadership and team management
+                        skills, with a track record of building and developing high-performing
+                        teams.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Excellent communication, negotiation, and
+                        interpersonal skills.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Strategic thinker with the ability to
+                        identify and capitalize on opportunities for business expansion.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Results-oriented mindset with a focus on
+                        achieving performance metrics, sales targets, and client-centric
+                        outcomes.</span>
+                </li>
+                <li>
+                    <span style="font-size: 18px;">Proficiency in CRM systems and project
+                        management tools.</span>
+                </li>
+            </ul>
+            <p>
+                <strong></strong>
+            </p>
+            <p>
+            </p>
+        </div>
+    </section>
+
+    <section class="s_text_block pt40 o_colored_level pb0 o_cc o_cc1"
+        data-snippet="s_text_block" data-name="Text" style="background-image: none;">
+        <div class="s_allow_columns container">
+            <div class="row o_grid_mode" data-row-count="-Infinity"></div>
+        </div>
+    </section>
+
+    <section
+        class="s_parallax parallax s_parallax_is_fixed o_colored_level o_half_screen_height"
+        data-scroll-background-ratio="1" data-snippet="s_parallax" data-name="Parallax"
+        style="background-image: none;">
+        <div class="s_parallax_bg oe_img_bg o_bg_img_center"
+            style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <img src="/web/image/51961-dc39f7f1/iSW_JobSite_Banner.jpg" alt="Job Site Banner"
+                style="max-width: 100%; height: auto;"/>
+        </div>
+        <div class="oe_structure oe_empty" data-editor-message-default="true"></div>
+    </section>
+
+
+    <section class="s_title o_colored_level pt0 pb4" data-vcss="001" data-snippet="s_title"
+        data-name="Title" style="background-image: none;">
+        <div class="s_allow_columns container">
+
+            <div class="row o_grid_mode" data-row-count="2">
+
+
+                <div
+                    class="o_grid_item o_colored_level o_cc o_cc1 g-col-lg-12 g-height-2 col-lg-12"
+                    style="grid-area: 1 / 1 / 3 / 13; z-index: 1;">
+                    <h1 style="text-align: center;">
+                        <font style="font-size: 62px;" class="text-o-color-1">
+                            <strong>Company Perks</strong>
+                        </font>
+                        <font style="font-size: 62px;">
+                            <strong>​</strong>
+                        </font>
+                        <font style="font-size: 62px;" class="text-o-color-1">
+                            <strong></strong>
+                        </font>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="s_features_grid o_colored_level pt0 pb0 o_we_force_no_transition"
+        data-snippet="s_features_grid" data-name="Features Grid" style="background-image: none;">
+        <div>
+            <div class="row">
+                <div
+                    class="s_col_no_bgcolor pb24 col-lg-5 offset-lg-1 o_animate o_anim_tada o_visible">
+                    <div class="row">
+                        <div class="pb24 o_colored_level col-lg-12" data-name="Box">
+                            <font class="text-o-color-1">
+                            </font>
+                            <p>
+                                <font class="text-o-color-1">​</font>
+                            </p>
+                        </div>
+                        <strong>
+                        </strong>
+                        <div class="col-lg-12 pb16 o_colored_level pt8" data-name="Box">
+                            <i
+                                class="fa fa-leanpub rounded s_features_grid_icon bg-o-color-1 fa-2x rounded-circle"></i>
+                            <div class="s_features_grid_content">
+                                <h4>Free learning and development courses for your personal and
+                                    career growth</h4>
+                                <p>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pt16 pb16 o_colored_level" data-name="Box">
+                            <i
+                                class="fa fa-files-o rounded-circle s_features_grid_icon fa-2x bg-primary text-o-color-3"></i>
+                            <div class="s_features_grid_content">
+                                <h4 class="o_default_snippet_text">Comprehensive HMO benefits
+                                    and insurance since day 1</h4>
+                                <p>
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            class="col-lg-12 pt16 pb16 o_colored_level o_we_force_no_transition"
+                            data-name="Box">
+                            <i
+                                class="fa fa-birthday-cake fa-2x rounded-circle bg-primary s_features_grid_icon text-o-color-3"></i>
+                            <div class="s_features_grid_content">
+                                <h4>Dynamic company events</h4>
+                                <p>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="s_col_no_bgcolor pb24 pt48 col-lg-5 o_animate o_anim_tada o_visible">
+                    <div class="row">
+
+
+                        <div class="col-lg-12 pb16 o_colored_level pt16" data-name="Box">
+                            <i
+                                class="fa fa-database rounded s_features_grid_icon rounded-circle fa-2x bg-o-color-1"></i>
+                            <div class="s_features_grid_content">
+                                <h4>Above-industry salary package and incentives</h4>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pt16 pb16 o_colored_level" data-name="Box">
+                            <i
+                                class="fa fa-child rounded s_features_grid_icon rounded-circle fa-2x bg-o-color-1"></i>
+                            <div class="s_features_grid_content">
+                                <h4>Opportunities for promotion</h4>
+                                <p>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 pb16 o_colored_level pt4" data-name="Box">
+                            <strong>
+                            </strong>
+                            <i
+                                class="fa fa-coffee bg-primary s_features_grid_icon fa-2x rounded-circle text-o-color-3"></i>
+                            <strong>
+                            </strong>
+                            <div class="s_features_grid_content">
+                                <strong>
+                                </strong>
+                                <h4>Free meals and snacks</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="s_title o_colored_level pb0 pt8 o_cc o_cc2 o_we_force_no_transition"
+        data-vcss="001" data-snippet="s_title" data-name="Title" style="background-image: none;">
+        <div class="s_allow_columns container">
+            <h1 style="text-align: center;">
+                <font style="font-size: 62px;" class="text-o-color-1">
+                    <strong>Our Values</strong>
+                </font>
+            </h1>
+            <h1 style="text-align: center;">
+                <span style="font-size: 20px;" class="text-o-color-5">Worldwide, strongly uphold
+                    our values to be of service to our people, our clients, and our community.</span>
+            </h1>
+        </div>
+    </section>
+
+
+    <section class="s_features o_colored_level pb16 o_cc o_cc2 pt8" data-snippet="s_features"
+        data-name="Features" style="background-image: none;">
+        <div class="container">
+            <div class="row">
+
+
+                <div class="pt32 pb32 text-center o_colored_level col-lg-2 offset-lg-1 shadow"
+                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 12px 0px !important;">
+                    <span class="fa fa-user m-3 text-o-color-1 rounded-circle rounded fa-3x"></span>
+                    <h3>
+                        <strong
+                            style="font-weight: 600;font-size: 20px;color: rgb(177, 236, 222)">
+                            <font class="text-o-color-1">WE PUT PEOPLE FIRST</font>
+                        </strong>
+
+                    </h3>
+                    <p>
+                        <span class="text-o-color-5">We consider our people as the foundation of
+                            our success.</span>
+
+                    </p>
+                </div>
+                <div class="pt32 pb32 text-center o_colored_level col-lg-2 shadow"
+                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 12px 0px inset !important;">
+                    <i class="fa fa-thumbs-o-up m-3 rounded text-o-color-1 rounded-circle fa-3x"></i>
+                    <h3>
+                        <strong
+                            style="font-weight: 600;font-size: 20px;color: rgb(177, 236, 222)">
+                            <font class="text-o-color-1">WE STRIVE FOR EXCELLENCE</font>
+                        </strong>
+
+                    </h3>
+                    <p>
+                        <span class="text-o-color-5">Our commitment to quality ensures that we
+                            always do our best.</span>
+
+                    </p>
+                </div>
+                <div class="pt32 pb32 text-center o_colored_level col-lg-2 shadow"
+                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 12px 0px !important;">
+                    <i class="fa fa-flask rounded m-3 text-o-color-1 rounded-circle fa-3x"></i>
+                    <h3>
+                        <strong
+                            style="font-weight: 600;font-size: 20px;color: rgb(177, 236, 222)">
+                            <font class="text-o-color-1">WE EMBRACE INNOVATION</font>
+                        </strong>
+
+                    </h3>
+                    <p>
+                        <span class="text-o-color-5">We stay agile and fast, always looking for
+                            ways to solve our clients’ needs.</span>
+
+                    </p>
+                </div>
+                <div class="pt32 pb32 text-center o_colored_level col-lg-2 shadow"
+                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 12px 0px inset !important;">
+                    <i class="fa fa-automobile rounded m-3 text-o-color-1 rounded-circle fa-3x"></i>
+                    <h3>
+                        <strong
+                            style="font-weight: 600;font-size: 20px;color: rgb(177, 236, 222)">
+                            <font class="text-o-color-1">WE DELIVER DELIGHT</font>
+                        </strong>
+
+                    </h3>
+                    <p>We pride ourselves on helping our clients reach their full potential.</p>
+                </div>
+                <div class="pt32 pb32 text-center o_colored_level col-lg-2 shadow"
+                    style="box-shadow: rgba(0, 0, 0, 0.15) 0px 6px 12px 0px !important;">
+                    <i class="fa fa-handshake-o m-3 text-o-color-1 rounded rounded-circle fa-3x"></i>
+                    <h3>
+                        <strong
+                            style="font-weight: 600;font-size: 20px;color: rgb(177, 236, 222)">
+                            <font class="text-o-color-1">WE CREATE REAL IMPACT</font>
+                        </strong>
+
+                    </h3>
+                    <p>
+                        <span class="text-o-color-5">We do things right and we get the job done.</span>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="s_carousel_wrapper" data-vxml="001" data-snippet="s_carousel"
+        data-name="Carousel">
+        <p>
+        </p>
+        <div class="s_carousel s_carousel_default carousel slide" data-bs-interval="10000"
+            id="myCarousel1693222546955" style="background-image: none;">
+
+            <ol class="carousel-indicators o_we_no_overlay">
+                <li data-bs-slide-to="0" data-bs-target="#myCarousel1693222546955"
+                    class="active"></li>
+                <li data-bs-slide-to="1" data-bs-target="#myCarousel1693222546955"
+                    aria-current="true"></li>
+                <li data-bs-slide-to="2" data-bs-target="#myCarousel1693222546955"></li>
+            </ol>
+
+
+            <div class="carousel-inner">
+
+                <div
+                    class="carousel-item pt152 o_colored_level pb0 oe_img_bg o_bg_img_center active"
+                    style="background-image: url(&quot;/web/image/website.s_carousel_default_image_1&quot;);"
+                    data-name="Slide">
+                    <div class="oe_unremovable container">
+                        <div class="row content">
+                            <div class="carousel-content o_colored_level pb120 col-lg-7">
+                                <h2>
+                                    <font style="font-size: 62px;">​
+                                    </font>
+                                </h2>
+                                <h2>We are one of the leading modern offshoring companies in the
+                                    Philippines.</h2>
+                                <h3>
+
+                                </h3>
+                                <h3>
+                                    <span class="text-o-color-5">
+                                        <span class="text-o-color-5">
+                                            <span style="font-size: 24px;">Founded in 2006,
+                                                iSupport Worldwide is a US-Owned BPO company
+                                                that provides world-class and dedicated
+                                                staffing, facilities, and managed operations for
+                                                fast-growing companies and small to medium-sized
+                                                businesses in any industry, vertical, and
+                                                language. </span>
+                                        </span>
+
+                                    </span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item pb96 o_colored_level pt128 oe_img_bg o_bg_img_center"
+                     style="background-image: url(&quot;data:image/jpeg;base64,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">
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<record id="thankyou" model="website.page">
+    <field name="url">/job-thank-you</field>
+    <field name="is_published">True</field>
+    <field name="website_indexed" eval="False"/>
+    <field name="name">Thank you (Recruitment)</field>
+    <field name="type">qweb</field>
+    <field name="key">website_hr_recruitment.thankyou</field>
+    <field name="arch" type="xml">
+        <t name="Thank you (Recruitment)" t-name="website_hr_recruitment.thankyou">
+            <t t-call="website.layout">
+                <div id="wrap">
+                    <div class="oe_structure">
+                        <div class="container">
+                            <div class="row pt40">
+                                <div class="col-lg-12">
+                                    <h1 class="text-center">Congratulations!</h1>
+                                    <p class="text-center">
+                                        Your application has been posted successfully.
+                                    </p>
+                                </div>
+                                <t t-if="request.session.get('form_builder_model_model', '') == 'hr.applicant'">
+                                    <t t-set="job" t-value="request.website._website_form_last_record().sudo().job_id"/>
+                                    <t t-set="responsible" t-value="job and job.user_id.website_published and job.user_id "/>
+                                </t>
+                                <t t-if="responsible">
+                                    <div class="col-lg-12">
+                                        <h3 class="mb32 text-center">Your application has been sent to:</h3>
+                                    </div>
+                                    <div class="col-lg-1 offset-lg-4">
+                                        <p t-field="responsible.avatar_128" t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'rounded-circle d-block mx-auto o_image_64_cover'}"/>
+                                    </div>
+                                    <div class="col-lg-5 o_responsible_data">
+                                        <h4 class="mt0" t-field="responsible.name"/>
+                                        <p t-field="responsible.function"/>
+                                        <t t-if='responsible.email'>
+                                            <i class="fa fa-envelope" role="img" aria-label="Email" title="Email"></i> <a t-attf-href="mailto:#{responsible.email}" t-esc="responsible.email"/>
+                                        </t>
+                                        <t t-if='responsible.phone'>
+                                            <br/><i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"></i> <span t-field="responsible.phone"/>
+                                        </t>
+                                    </div>
+                                    <div class="col-lg-12 mt32 mb32 text-center">
+                                        <span>
+                                            We usually reply between one and three days.<br/>
+                                            Feel free to contact him/her if you have further questions.
+                                        </span>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="row" id="o_recruitment_thank_cta">
+                                <div class="col-lg-12 text-center mb32">
+                                    In the meantime,
+                                    <h3 class="mt8 mb32">Look around on our website:</h3>
+                                    <a role="button" href="/" class="btn btn-primary btn-lg">Continue To Our Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </field>
+</record>
+
+<template id="job_filter_by_countries" inherit_id="website_hr_recruitment.index" active="False" name="Filter by Countries">
+    <xpath expr="//div[@id='jobs_grid_left']" position="inside">
+        <ul class="nav nav-pills flex-column mb32">
+            <li class="nav-item"><a t-attf-href="/jobs#{ '/department/%s' % slug(department_id) if department_id else '' }#{ '/office/%s' % office_id if office_id else '' }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }?all_countries=1"
+                t-attf-class="nav-link#{'' if country_id else ' active'}">All Countries</a></li>
+            <t t-foreach="countries" t-as="country">
+                <li class="nav-item">
+                    <a t-attf-href="/jobs/country/#{ slug(country) }#{ '/department/%s' % slug(department_id) if department_id else '' }#{ '/office/%s' % office_id if office_id else '' }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }"
+                        t-attf-class="nav-link#{' active' if country_id and country_id.id == country.id else ''}"><span t-field="country.name"/></a>
+                </li>
+            </t>
+        </ul>
+    </xpath>
+    <xpath expr="//div[@id='jobs_grid_left']" position="attributes">
+        <attribute name="class">col-lg-3</attribute>
+    </xpath>
+</template>
+
+<!--<template id="job_filter_by_departments" inherit_id="website_hr_recruitment.index" active="False" name="Filter by Departments">-->
+<!--    <xpath expr="//div[@id='jobs_grid_left']" position="inside">-->
+<!--        <ul class="nav nav-pills flex-column mb32">-->
+<!--            <li class="nav-item"><a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/office/%s' % office_id if office_id else ''}#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }#{ '/x_industry/%s' % slug(x_industry) if x_industry else '' }"-->
+<!--                t-attf-class="nav-link#{'' if x_industry else ' active'}">All Departments</a></li>-->
+<!--            <t t-foreach="departments" t-as="department">-->
+<!--                <li class="nav-item">-->
+<!--                    <a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }/department/#{ slug(department) }#{ '/office/%s' % office_id if office_id else '' }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }#{ '/x_industry/%s' % slug(x_industry) if x_industry else '' }"-->
+<!--                        t-attf-class="nav-link#{' active' if department_id and department_id.id == department.id else ''}"><span t-field="department.job_id.name"/></a>-->
+<!--                </li>-->
+<!--            </t>-->
+<!--        </ul>-->
+<!--    </xpath>-->
+<!--    <xpath expr="//div[@id='jobs_grid_left']" position="attributes">-->
+<!--        <attribute name="class">col-lg-3</attribute>-->
+<!--    </xpath>-->
+<!--</template>-->
+
+<template id="job_filter_by_departments" inherit_id="website_hr_recruitment.index" active="False" name="Filter by Departments">
+    <xpath expr="//div[@id='jobs_grid_left']" position="inside">
+        <ul class="nav nav-pills flex-column mb32">
+            <li class="nav-item"><a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/office/%s' % office_id if office_id else ''}#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }"
+                t-attf-class="nav-link#{'' if department_id else ' active'}">All Departments</a></li>
+            <t t-foreach="departments" t-as="department">
+                <li class="nav-item">
+                    <a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }/department/#{ slug(department) }#{ '/office/%s' % office_id if office_id else '' }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }"
+                        t-attf-class="nav-link#{' active' if department_id and department_id.id == department.id else ''}"><span t-field="department.name"/></a>
+                </li>
+            </t>
+        </ul>
+    </xpath>
+    <xpath expr="//div[@id='jobs_grid_left']" position="attributes">
+        <attribute name="class">col-lg-3</attribute>
+    </xpath>
+</template>
+
+<!--<template id="job_filter_by_industry" inherit_id="website_hr_recruitment.index" active="False" name="Filter by Industry">-->
+<!--    <xpath expr="//div[@id='jobs_grid_left']" position="inside">-->
+<!--        <ul class="nav nav-pills flex-column mb32">-->
+<!--            <li class="nav-item"><a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/office/%s' % office_id if office_id else ''}#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }#{ '/industry/%s' % x_industry if x_industry else '' }"-->
+<!--                t-attf-class="nav-link#{'' if jobs else ' active'}">All Industries</a></li>-->
+<!--            <t t-foreach="jobs" t-as="jobs">-->
+<!--                <li class="nav-item">-->
+<!--                    <a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }/department/#{ slug(department) }#{ '/office/%s' % office_id if office_id else '' }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }#{ '/industry/%s' % x_industry if x_industry else '' }"-->
+<!--                        t-attf-class="nav-link#{' active' if x_industry and x_industry == x_industry else ''}"><span t-field="jobs.name"/></a>-->
+<!--                </li>-->
+<!--            </t>-->
+<!--        </ul>-->
+<!--    </xpath>-->
+<!--    <xpath expr="//div[@id='jobs_grid_left']" position="attributes">-->
+<!--        <attribute name="class">col-lg-3</attribute>-->
+<!--    </xpath>-->
+<!--</template>-->
+
+<template id="job_filter_by_offices" inherit_id="website_hr_recruitment.index" active="False" name="Filter by Offices">
+    <xpath expr="//div[@id='jobs_grid_left']" position="inside">
+        <ul class="nav nav-pills flex-column mb32">
+            <li class="nav-item"><a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/department/%s' % slug(department_id) if department_id else '' }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }"
+                t-attf-class="nav-link#{'' if office_id else ' active'}">All Offices</a></li>
+            <t t-foreach="offices" t-as="thisoffice">
+                <li class="nav-item">
+                    <a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/department/%s' % slug(department_id) if department_id else '' }/office/#{ thisoffice.id }#{ '/employment_type/%s' % contract_type_id if contract_type_id else '' }"
+                        t-attf-class="nav-link#{' active' if office_id and office_id == thisoffice.id else ''}">
+                        <span t-field="thisoffice.city"/>
+                        <t t-if="thisoffice.country_id">,
+                            <span t-field="thisoffice.country_id.name"/>
+                        </t>
+                    </a>
+                </li>
+            </t>
+        </ul>
+    </xpath>
+    <xpath expr="//div[@id='jobs_grid_left']" position="attributes">
+        <attribute name="class">col-lg-3</attribute>
+    </xpath>
+</template>
+
+<template id="job_filter_by_employment_type" inherit_id="website_hr_recruitment.index" active="False" name="Filter by Employment Type">
+    <xpath expr="//div[@id='jobs_grid_left']" position="inside">
+        <ul class="nav nav-pills flex-column mb32">
+            <li class="nav-item"><a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/department/%s' % slug(department_id) if department_id else '' }#{ '/office/%s' % office_id if office_id else '' }"
+                t-attf-class="nav-link#{'' if contract_type_id else ' active'}">All Employment Types</a></li>
+            <t t-foreach="employment_types" t-as="employment_type">
+                <li class="nav-item">
+                    <a t-attf-href="/jobs#{ '/country/%s' % slug(country_id) if country_id else '' }#{ '/department/%s' % slug(department_id) if department_id else '' }#{ '/office/%s' % office_id if office_id else '' }/employment_type/#{ employment_type.id }"
+                        t-attf-class="nav-link#{' active' if contract_type_id and contract_type_id == employment_type.id else ''}">
+                        <span t-field="employment_type.name"/>
+                    </a>
+                </li>
+            </t>
+        </ul>
+    </xpath>
+    <xpath expr="//div[@id='jobs_grid_left']" position="attributes">
+        <attribute name="class">col-lg-3</attribute>
+    </xpath>
+</template>
+
+<template id="job_right_side_bar" inherit_id="website_hr_recruitment.index" active="True" name="Right Side Bar">
+    <xpath expr="//div[@id='jobs_grid']" position="after">
+        <div class="col-lg-3 oe_structure oe_empty" id="jobs_grid_left">
+            <section class="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <img src="/website_hr_recruitment/static/src/img/job_image_1.jpg" class="img-fluid" alt="About us"/>
+                            <h4 class="mt24 mb8">About us</h4>
+                            <p>
+                                We are a team of passionate people whose goal is to improve everyone's life through disruptive products.
+                                We build great products to solve your business problems.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </xpath>
+</template>
+
+</odoo>

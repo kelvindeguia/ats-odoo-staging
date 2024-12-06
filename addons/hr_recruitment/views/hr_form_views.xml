@@ -1,0 +1,265 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <record id="action_server_transfer_applicant" model="ir.actions.server">
+        <field name="name">Transfer to all applicants</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="model_hr_form"/>
+        <field name="binding_model_id" ref="model_hr_form"/>
+        <field name="state">code</field>
+        <field name="code">records.transfer_records_applicants()</field>
+    </record>
+
+        <!--    Job Application Action-->
+    <record model="ir.actions.act_window" id="action_hr_form">
+        <field name="name">Job Application</field>
+        <field name="res_model">hr.form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="False"/>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No Job Applications Yet
+            </p>
+            <p>
+                Odoo helps you track job applications from our career hub.
+            </p>
+            <p>
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Job Application"
+              id="menu_hr_form"
+              action="action_hr_form"
+              parent="menu_sourcing_pages"
+              groups="group_hr_recruitment_user"
+              sequence="3"/>
+
+
+    <!-- Job Application Tree View -->
+    <record model="ir.ui.view" id="hr_form_view_tree">
+        <field name="name">Job Application Tree</field>
+        <field name="model">hr.form</field>
+        <field name="arch" type="xml">
+            <tree string="Job Application">
+                <field name="requisition_id"/>
+                <field name="name"/>
+                <field name="mobile_number"/>
+                <field name="email"/>
+                <field name="attachment_id"/>
+                <field name="linkedin"/>
+                <field name="record_ageing"/>
+                <field name="status" decoration-success="status == 'dispatched'" decoration-danger="status == 'untapped'"/>
+            </tree>
+        </field>
+    </record>
+
+     Job Application Form View
+    <record model="ir.ui.view" id="hr_form_form_view">
+        <field name="name">Job Application Form</field>
+        <field name="model">hr.form</field>
+        <field name="arch" type="xml">
+            <form string="Job Application Form" class="o_job_form">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                    </div>
+                    <div class="oe_title">
+                    </div>
+                    <div class="oe_title">
+                        <div>
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" width="50%" placeholder="Required" required="1"/>
+                            </h1>
+                        </div>
+                        <group string="Applicant Information">
+                            <group>
+                                <field name="email" required="1"/>
+                                <field name="mobile_number" required="1"/>
+                                <field name="linkedin"/>
+                                <field name="requisition_id"/>
+                            </group>
+                            <field name="attachment_id" widget="many2many_binary"/>
+                        </group>
+                        <group string="Record Information">
+                            <field name="status" style="font-weight: bold; font-size: 15pt" readonly="1" decoration-success="status == 'dispatched'" decoration-danger="status == 'untapped'"/>
+                            <field name="dispatch_date" readonly="1"/>
+                            <field name="record_ageing"/>
+                            <field name="create_date" string="Lodged Date"/>
+                            <field name="date_today" groups="base.group_system"/>
+                            <field name="create_uid" groups="base.group_system"/>
+                        </group>
+                        <notebook>
+                            <page string="Field Logs">
+<!--                                <field name="update_logs" readonly="1" force_save="1"/>-->
+                            </page>
+                        </notebook>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<!--    Job Application Filters-->
+        <record id="hr_form_view_search_bis" model="ir.ui.view">
+        <field name="name">hr.form.view.search</field>
+        <field name="model">hr.form</field>
+        <field name="arch" type="xml">
+            <search string="Search Applicant">
+                <field string="Requisition ID" name="requisition_id"/>
+                <field string="Applicant Name" name="name"/>
+                <field string="Email" name="email"/>
+                <field string="Mobile Number" name="mobile_number"/>
+                <field string="Status" name="status"/>
+                <field string="LinkedIn Profile" name="linkedin"/>
+           </search>
+        </field>
+    </record>
+
+    <!--    Application form page layout-->
+    <template id="job_form_template" name="Apply Now!">
+        <t t-call="website.layout">
+            <t t-set="no_copyright" t-value="True"/>
+            <t t-set="no_footer" t-value="True"/>
+            <div id="wrap" class="o_website_hr_recruitment_jobs_list bg-100">
+				<script>
+                    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer','GTM-5C7DKSQ');
+                </script>
+                <section class="s_title pt40 pb40 o_colored_level" data-vcss="001" data-snippet="s_title"
+                         data-name="Title" style="background-image: none;">
+                    <div class="s_allow_columns container">
+                        <h1 style="text-align: left;">
+                            <br/>
+                        </h1>
+                        <h1 style="text-align: left;">
+                            <font style="font-size: 62px;">Job Application Form</font>
+                            <br/>
+                        </h1>
+                    </div>
+                </section>
+                <div class="oe_structure pt-4">
+                    <div class="container">
+                        <form action="/jobs/apply/job_thanks/" method="POST" enctype="multipart/form-data"
+                              redirect="/job_thanks/">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <div class="form-group pt-4">
+                                <label for="name">Your Name</label>
+                                <input type="text" name="name" id="name" class="form-control"
+                                       placeholder="e.g. John Doe"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="email">Your Email</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="mobile_number">Mobile Number</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">+63</span>
+                                    </div>
+                                    <input type="number" name="mobile_number" id="mobile_number"
+                                           placeholder="e.g. 9123456789" class="form-control" required="required"/>
+                                </div>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="linkedin">LinkedIn Profile</label>
+                                <input type="text" name="linkedin" id="linkedin" class="form-control"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4">
+                                <label for="attachment_id">Resume/CV</label>
+                                <input type="file" name="attachment_id" id="attachment_id" class="form-control"
+                                       accept=".pdf, .doc, .docx"
+                                       required="required"/>
+                            </div>
+                            <div class="form-group pt-4 pb-5">
+                                <input type="submit" value="Submit" class="btn btn-primary pull-left"/>
+                                <span class="ps-3" id="errorContainer" style="color: red;"></span>
+                            </div>
+                            <script>
+                                // Function to handle the response and display error
+                                function handleResponse(response) {
+                                    if (response.status === 400) {
+                                        response.text().then(function(errorMessage) {
+                                            // Display the error message in the error container
+                                            var errorContainer = document.getElementById("errorContainer");
+                                            errorContainer.textContent = errorMessage;
+                                        });
+                                    }else if (response.status === 401) {
+                                        response.text().then(function(errorMessage) {
+                                            // Display the error message in the error container
+                                            var errorContainer = document.getElementById("errorContainer");
+                                            errorContainer.textContent = errorMessage;
+                                        });
+                                    } else {
+                                        window.location.href = '/job_thanks/';
+                                    }
+                                }
+                                // Assuming you have an event listener for form submission
+                                // Replace this with your actual event listener
+                                document.querySelector('form').addEventListener('submit', function(event) {
+                                    event.preventDefault(); // Prevent the default form submission
+                                    // Fetch the form data and submit it
+                                    fetch('/jobs/apply/job_thanks/', {
+                                        method: 'POST',
+                                        body: new FormData(event.target),
+                                        headers: {
+                                            'X-CSRF-Token': '{{ request.csrf_token() }}'
+                                        }
+                                    })
+                                    .then(handleResponse)
+                                    .catch(function(error) {
+                                        console.error('Error:', error);
+                                    });
+                                });
+                        </script>
+                        </form>
+                    </div>
+                </div>
+				<noscript>
+					<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5C7DKSQ"
+						height="0" width="0" style="display:none;visibility:hidden">
+					</iframe>
+				</noscript>
+            </div>
+        </t>
+    </template>
+
+
+    <record id="application_thanks" model="website.page">
+            <field name="name">Job Application Thanks</field>
+            <field name="type">qweb</field>
+            <field name="url">/job_thanks/</field>
+            <field name="website_published">True</field>
+            <field name="key">hr_recruitment.application_thanks</field>
+            <field name="arch" type="xml">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="container">
+                            <h1>Thank you!</h1>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="alert alert-success" role="status">
+                                        We've received your job application.
+                                    </div>
+                                    <a class="btn btn-primary" href="/">Go to open positions</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </field>
+        </record>
+
+    </data>
+</odoo>
