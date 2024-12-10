@@ -940,11 +940,12 @@ class Applicant(models.Model):
     def _email_validation(self):
         is_unique_email = self.search_count([('email_from', '=', self.email_from)])
         is_blacklisted_email = self.env['hr.blacklist'].search_count([('email', '=', self.email_from)])
-        is_unique_email_referral = self.search_count([('email_from', '=', self.email_from), ('record_ageing_ref', '<', 90)])
+        # is_unique_email_referral = self.search_count([('email_from', '=', self.email_from), ('record_ageing_ref', '<', 90)])
+        is_unique_email_referral = self.search_count([('record_ageing_ref', '<', 90)])
         if self.email_from != False:
             if is_unique_email > 1 and self.employee_email == False:
                 raise ValidationError(f"The provided email '{self.email_from}' was already used in an existing application. To avoid duplicate records, please provide a non-existent email.")
-            if is_unique_email_referral and self.employee_email != False:
+            if is_unique_email_referral and is_unique_email > 1:
                 raise ValidationError(
                     f"The provided email '{self.email_from}' was already used in an existing application. To avoid duplicate records, please provide a non-existent email or wait till the existing application turns 90 days.")
             if is_blacklisted_email:
@@ -954,12 +955,13 @@ class Applicant(models.Model):
     @api.constrains('x_mobile_number')
     def _mobile_validation(self):
         is_unique = self.search_count([('x_mobile_number', '=', self.x_mobile_number)])
-        is_unique_referral = self.search_count([('x_mobile_number', '=', self.x_mobile_number), ('record_ageing_ref', '<', 90)])
+        # is_unique_referral = self.search_count([('x_mobile_number', '=', self.x_mobile_number), ('record_ageing_ref', '<', 90)])
+        is_unique_referral = self.search_count([('record_ageing_ref', '<', 90)])
         if self.x_mobile_number != False:
             if is_unique > 1 and self.employee_email == False:
                 raise ValidationError(
                     f"The provided primary mobile number '{self.x_mobile_number}' was already used in an existing application. To avoid duplicate records, please provide a non-existent mobile number.")
-            if is_unique_referral and self.employee_email != False:
+            if is_unique_referral and is_unique > 1:
                 raise ValidationError(
                     f"The provided primary mobile number '{self.x_mobile_number}' was already used in an existing application. To avoid duplicate records, please provide a non-existent mobile number or wait till the existing application turns 90 days.")
             for rec in self:
