@@ -2750,6 +2750,7 @@ class Referral(models.Model):
                 'employee_id': record.emp_id,
                 'employee_account': record.emp_account,
                 'x_app_source_category': 'employee referral',
+                'x_app_specific_source_last': 19,
                 'referral_position': record.desired_position,
                 'x_referrer_name': record.emp_name,
                 'x_requisition_id': record.requisition_id.id,

@@ -263,7 +263,7 @@
                                 <field name="record_ageing_ref" invisible="1" />
                                 <field name="job_source" />
                                 <field name="x_referrer_name"
-                                    attrs="{'readonly': [('employee_id', '=', False)]}" />
+                                    attrs="{'readonly': [('employee_id', '=', False), ('x_app_source_category', '!=', 'external_referral')]}"/>
                                 <!--<field
                                 name="categ_ids" placeholder="Tags" widget="many2many_tags"
                                 options="{'color_field': 'color', 'no_create_edit': True}"/>-->
