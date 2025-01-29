@@ -729,9 +729,32 @@ class Applicant(models.Model):
             rec.initial_touch_date = False
             rec.x_application_category = False
             rec.x_application_stage_ownership = False
-            rec.stage_id = False
+            rec.stage_id = 1
             if not self._origin.x_reprofile_logs == False:
                 rec.reprofiled_identifier = True
+            
+            # Added fields to remove value
+            rec.x_date_dispatched = False
+            rec.x_touch_date = False
+            rec.x_status_dropdown = False
+            # CPS
+            rec.x_cps_endorsement = False
+            rec.x_cps_result = False
+            rec.x_cps_result_date = False
+            # CI
+            rec.x_ci_date = False
+            rec.x_ci_result = False
+            rec.x_ci_result_date = False
+            # DA
+            rec.x_date_sent_assessment = False
+            # 2nd CI
+            rec.x_second_ci_date = False
+            rec.x_second_ci_result = False
+            rec.x_second_ci_result_date = False
+            # 3nd CI
+            rec.x_third_ci_date = False
+            rec.x_third_ci_result = False
+            rec.x_third_ci_result_date = False
 
     # Applicant Stage Funneling
     @api.onchange('stage_id')
