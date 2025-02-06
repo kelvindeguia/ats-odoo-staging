@@ -728,13 +728,14 @@ class Applicant(models.Model):
         for rec in self:
             rec.initial_touch_date = False
             rec.x_application_category = False
-            rec.x_application_stage_ownership = False
-            rec.stage_id = 1
+            # rec.x_application_stage_ownership = False
+            
+            if not rec.x_application_category:
+                rec.stage_id = 1
             if not self._origin.x_reprofile_logs == False:
                 rec.reprofiled_identifier = True
             
             # Added fields to remove value
-            rec.x_date_dispatched = False
             rec.x_touch_date = False
             rec.x_status_dropdown = False
             # CPS
@@ -1225,7 +1226,7 @@ class Applicant(models.Model):
         for rec in self:
             rec.x_application_stage_ownership = False
             rec.x_application_stage_ownership2 = False
-            rec.stage_id = False
+            rec.stage_id = 1
 
     @api.depends('x_application_category')
     def onchange_x_application_test(self):
@@ -1236,12 +1237,13 @@ class Applicant(models.Model):
     @api.onchange('x_application_stage_ownership')
     def onchange_x_application_stage_ownership(self):
         for rec in self:
-            rec.stage_id = False
+            if rec.x_application_stage_ownership != False:
+                rec.stage_id = False
 
-    @api.onchange('x_application_stage_ownership2')
-    def onchange_x_application_stage_ownership(self):
-        for rec in self:
-            rec.stage_id = False
+    # @api.onchange('x_application_stage_ownership2')
+    # def onchange_x_application_stage_ownership(self):
+    #     for rec in self:
+    #         rec.stage_id = False
 
     # Specific Source/Channel Functions
     @api.onchange('x_app_source_category')
